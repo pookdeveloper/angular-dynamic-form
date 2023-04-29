@@ -1,0 +1,50 @@
+<button (click)="buttonClick()"> ADD</button>
+<button (click)="buttonClickAdd()"> ADD 2</button>
+<button (click)="buttonClickDelete()"> REMOVE</button>
+<button (click)="showForm()">showForm</button>
+
+<button (click)="datoPruebaChange()">datoPrueba</button>
+
+<form [formGroup]="$any(formAaa)">
+  <app-text-render formControlName="aaa"></app-text-render>
+</form>
+
+{{formAaa.value | json}}
+
+
+<!--
+<form [formGroup]="$any(form)">
+  <app-dynamic-form
+    [form]="form"
+    [formConfig]="CONTACT_FORM_CONFIG"
+  ></app-dynamic-form>
+</form>
+
+<app-prueba [datoPrueba]="datoPrueba"></app-prueba>
+-->
+
+
+<!--<div>Form 2</div>
+{{form2.value | json}}
+<form [formGroup]="form2">
+  <app-text-render formControlName="name"></app-text-render>
+</form>
+
+<div>Form 3</div>
+{{form3.value | json}}
+<form [formGroup]="form3">
+  <app-text-render [control]="$any(form3.controls['name'])"></app-text-render>
+</form>
+
+<div>NG MODEL</div>
+{{dato}}
+<app-text-render appColor="red" [(ngModel)]="dato"></app-text-render>-->
+
+
+<!--
+hostDirectives
+hostDirectives
+hostDirectives
+hostDirectives
+hostDirectives
+-->

@@ -1,0 +1,46 @@
+<div *ngFor="let field of _formConfig.fields" class="form-field">
+
+  <h1>
+    {{field.key}}
+  </h1>
+
+  <!--<div [formGroup]="group.get(field.key)" *ngIf="field.controlType === 'FormGroup' || field.controlType === 'FormArray'">
+    <legend>{{field.label}}</legend>
+    <dynamic-form [group]="group.get(field.key)" [formConfig]="field"></dynamic-form>
+  </div>-->
+
+  <!--<div *ngIf="field.controlType !== 'FormGroup' && field.controlType !== 'FormArray'" [formGroupName]="field.key">-->
+  <div *ngIf="field.controlType !== 'FormGroup' && field.controlType !== 'FormArray'">
+    <!---->
+    <!--<ng-container *ngComponentOutlet="field.component;
+                  ndcDynamicInputs: getInputsComponent(field);
+                  ndcDynamicOutputs: field.outputs">
+    </ng-container>-->
+    <!--<ng-container [ngComponentOutlet]="field.component"
+                  [ndcDynamicInputs]="getInputsComponent(field)"
+                  [ndcDynamicOutputs]="field.outputs">
+    </ng-container>-->
+    <!---->
+    <div>=>{{field.key}}</div>
+    <ng-container appDynamicFormField [field]="field" [form]="form" [control]="$any(form.get(field.key))"
+                  (onDestroyComponent)="removeControl($event)"></ng-container>
+  </div>
+
+
+  <div *ngIf="field.controlType === 'FormGroup'" [formGroup]="$any(form.get(field.key))">
+    <div>Group=>{{field.key}}</div>
+    <app-dynamic-form [form]="$any(form.get(field.key))" [formConfig]="field"
+                      (onDestroyComponent)="removeControl($event)"></app-dynamic-form>
+  </div>
+
+  <div *ngIf="field.controlType === 'FormArray'" [formGroup]="$any(form.get(field.key))">
+    <div>Array=>{{field.key}}</div>
+    <div *ngFor="let item of $any(form.get(field.key)).controls; let i = index;">
+      <div [formGroupName]="i">
+        <app-dynamic-form [form]="$any(item)" [formConfig]="field"
+                          (onDestroyComponent)="removeControl($event)"></app-dynamic-form>
+      </div>
+    </div>
+  </div>
+
+</div>
