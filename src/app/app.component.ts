@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   };
   // currentColor = inject(DIRECTIVE_TOKEN, {optional: true});
 
-  title = 'angular-app';
+  title = 'angular-dynamic-form';
   form: FormGroup = new FormGroup({});
 
 
