@@ -25,7 +25,10 @@ export class AppComponent implements OnInit {
 
   title = 'angular-dynamic-form';
   form: FormGroup = new FormGroup({});
-
+  
+  aa = new FormGroup({
+    emailFormControl: new FormControl('', [Validators.required]),
+  });
 
   formAaa = new FormGroup({
     aaa: new FormControl({}),

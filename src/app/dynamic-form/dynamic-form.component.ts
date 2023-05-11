@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,15 +15,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
-  
   @Input() form: FormGroup;
 
   _formConfig: any;
   @Input('formConfig') set formConfig(data) {
     this._formConfig = Object.assign({}, data);
     console.log('===>  formConfig', this, this._formConfig);
-    debugger
-  };
+  }
 
   @Output() onDestroyComponent = new EventEmitter<any>();
 
@@ -34,9 +40,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     // this.createForm();
     console.log('===> changes ', changes);
-    debugger
     // TODO Recusivamente ver que inputs ya no estan
-    this.createForm()
+    this.createForm();
   }
 
   ngOnInit() {
@@ -53,19 +58,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     console.log('===>  CREADOOOO valor !', this.form.value);
   }
 
-
   addControlsToForm(fields: any, form: FormGroup) {
     fields.forEach((field: any) => {
       // FORM ARRAY
       if (field.controlType === 'FormArray') {
         const formArray = new FormArray([]);
         if (field.fields) {
-          let form = new FormGroup({})
+          let form = new FormGroup({});
           this.addControlsToForm(field.fields, form);
           formArray.push(form);
         }
         //form.setControl(field.key, formArray);
-        this.addControlToForm(form, formArray, field)
+        this.addControlToForm(form, formArray, field);
         // FORM GROUP
       } else if (field.controlType === 'FormGroup') {
         const formGroup = new FormGroup({});
@@ -73,7 +77,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           this.addControlsToForm(field.fields, formGroup);
         }
         //form.setControl(field.key, formGroup);
-        this.addControlToForm(form, formGroup, field)
+        this.addControlToForm(form, formGroup, field);
         // FORM CONTROL
       } else {
         const control = new FormControl(field.value || '', field.validators);
@@ -82,7 +86,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
   }
 
-  addControlToForm(form: FormGroup, control: FormControl | FormGroup | FormArray, field: any) {
+  addControlToForm(
+    form: FormGroup,
+    control: FormControl | FormGroup | FormArray,
+    field: any
+  ) {
     if (!form.get(field.key)) {
       form.setControl(field.key, control);
     }
@@ -90,11 +98,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   /** Send params to component */
   getInputsComponent(field: any): any {
-    return {...field.inputs, field: field, form: this.form, control: this.form.controls[field.key]}
+    return {
+      ...field.inputs,
+      field: field,
+      form: this.form,
+      control: this.form.controls[field.key],
+    };
   }
 
   removeControl(event: any) {
     (event.form as FormGroup).removeControl(event.field.key);
   }
-
 }

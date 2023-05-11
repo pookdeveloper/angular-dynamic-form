@@ -9,13 +9,11 @@ import { TextRenderModule } from './text-render/text-render.module';
 import { CommonModule } from '@angular/common';
 import { ColorDirective } from './color.directive';
 import { PruebaModule } from './prueba/prueba.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EmailComponent,
-    SelectComponent
-  ],
+  declarations: [AppComponent, EmailComponent, SelectComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -24,11 +22,12 @@ import { PruebaModule } from './prueba/prueba.module';
     ReactiveFormsModule,
     TextRenderModule,
     ColorDirective,
-    PruebaModule
+    PruebaModule,
+    BrowserAnimationsModule,
+    MatInputModule,
   ],
   providers: [],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

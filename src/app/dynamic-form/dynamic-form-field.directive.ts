@@ -1,18 +1,31 @@
 import {
-  Directive, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewContainerRef
+  Directive,
+  EventEmitter,
+  Injector,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewContainerRef,
 } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+} from '@angular/forms';
 import { DynamicFormComponent } from './dynamic-form.component';
 
 @Directive({
   selector: '[appDynamicFormField]',
-
 })
 export class DynamicFormFieldDirective implements OnInit, OnChanges, OnDestroy {
   @Input() field!: any;
   @Input() control!: FormControl;
   @Input() config: any;
-  @Input() form: FormGroup | FormArray
+  @Input() form: FormGroup | FormArray;
   @Output() onDestroyComponent = new EventEmitter<any>();
 
   constructor(
@@ -20,11 +33,10 @@ export class DynamicFormFieldDirective implements OnInit, OnChanges, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private dynamicFormComponent: DynamicFormComponent,
     private injector: Injector
-  ) {
-  }
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('DIRECT ===> changes', changes);    // @ts-ignore
+    console.log('DIRECT ===> changes', changes); // @ts-ignore
     if (changes.form) {
       /*const componentFactory = this.resolver.resolveComponentFactory(this.component);
      // const componentRef: ComponentRef<any> = this.container.createComponent(componentFactory);
@@ -43,9 +55,12 @@ export class DynamicFormFieldDirective implements OnInit, OnChanges, OnDestroy {
       parent: this.injector,
     });
     console.log('DIRECT ===>  this.field', this.field);
-    const componentRef = this.viewContainerRef.createComponent(this.field.component, {
-      injector: newInjector
-    });
+    const componentRef = this.viewContainerRef.createComponent(
+      this.field.component,
+      {
+        injector: newInjector,
+      }
+    );
     // componentRef.instance.config = this.field;
     // @ts-ignore
     componentRef.instance.setControl = this.form.controls[this.field.key];
@@ -70,8 +85,11 @@ export class DynamicFormFieldDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    debugger
-    this.onDestroyComponent.emit({form: this.form, control: this.control, field: this.field});
+    this.onDestroyComponent.emit({
+      form: this.form,
+      control: this.control,
+      field: this.field,
+    });
   }
 
   /*
@@ -84,5 +102,4 @@ export class DynamicFormFieldDirective implements OnInit, OnChanges, OnDestroy {
       });
     }
   */
-
 }
